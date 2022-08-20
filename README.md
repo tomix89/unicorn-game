@@ -1,12 +1,11 @@
 # unicorn-game
 My first ever Unity game.
-I wanted to test out some basic concepts, and basically how unity works.
+I just wanted to test out some basic concepts, and how unity works.
 
-Mayority of the things are from tutorals. The game logic itself is my personal idea, and the art is forom my 5 year old kid.
-All the art was hand drawn, scanned, cut in photo editor and imported.
+Mayority of the things are from tutorals:
 
  - basic movement (without crouch): 
- https://www.youtube.com/watch?v=dwcT-Dch0bA
+ https://www.youtube.com/watch?v=dwcT-Dch0bA <br>
    with added fall speed:
  https://www.youtube.com/watch?v=rJECT58CQHs&t=60s
    
@@ -27,3 +26,11 @@ All the art was hand drawn, scanned, cut in photo editor and imported.
  - sound (coming):
  
  - effects (coming):
+ 
+ - game time, best time and restart game (coming):
+ 
+The game logic itself is my personal idea, and the art is forom my 5 year old kid.
+All the art was hand drawn, scanned, cut in photo editor and imported.
+
+The idea is the following: you need to collet 3 apples. Each apple collected allows you to jump higher and higher.\
+(coming) Finally you need to collect the gem to finish the game.
