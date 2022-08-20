@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour {
         animator = GetComponent<Animator>();
         print(animator);
 
-        AppleCount.OnAppleCountChanged += OnAppleCountChanged;
+        AppleCountController.OnAppleCountChanged += OnAppleCountChanged;
 
         // just to set the default
         OnAppleCountChanged(0);
@@ -49,7 +49,6 @@ public class PlayerMovement : MonoBehaviour {
                 controller.setJumpForce(500);
                 break;
 
-
             case 3:
                 controller.setJumpForce(650);
                 break;
@@ -66,23 +65,8 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-    private int cntr = 0;
-
 
     private void FixedUpdate() {
-
-        if (jumpRequest) {
-
-            cntr++;
-
-         
-        }
-
-        if (cntr > 0 && cntr < 100) {
-            print("jumpRequest:" + jumpRequest + " isGround: " + controller.isGrounded() + " hMoveAmount: " + hMoveAmount);
-            cntr++;
-        }
-
 
         if (jumpRequest && controller.isGrounded()) {
             changeAnimation(AnimationType.JUMP);

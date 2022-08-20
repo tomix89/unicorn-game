@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AppleCount : MonoBehaviour {
+public class AppleCountController : MonoBehaviour {
 
     public delegate void AppleCountChanged(int count);
     public static event AppleCountChanged OnAppleCountChanged;
