@@ -27,7 +27,8 @@ In mayority of cases the base idea of scripts were taken from tutorals (with som
  
  - sound effects (coming):
  
- - visual effects (coming):
+ - visual effects:
+  own experiments with ParticleSystem
  
  - game time, best time and restart and quit game (coming):
  

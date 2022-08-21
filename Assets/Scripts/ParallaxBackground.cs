@@ -10,7 +10,7 @@ public class ParallaxBackground : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        length = GetComponent<SpriteRenderer>().bounds.size.x;
+      //  length = GetComponent<SpriteRenderer>().bounds.size.x;
         startpos = transform.position.x;
     }
 
