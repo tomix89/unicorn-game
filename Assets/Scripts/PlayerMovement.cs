@@ -94,7 +94,7 @@ public class PlayerMovement : MonoBehaviour {
         }
         animatroCurrentState = anim;
 
-        print(anim);
+      //  print(anim);
 
         string animText = "";
 

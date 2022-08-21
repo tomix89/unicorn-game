@@ -21,13 +21,15 @@ In mayority of cases the base idea of scripts were taken from tutorals (with som
  - lives (apples) counter:
  https://www.youtube.com/watch?v=C_NsmQD6LK8
  
- - parallax background (coming):
+ - parallax background:
+ https://www.youtube.com/watch?v=zit45k6CUMk
+ https://www.youtube.com/watch?v=wBol2xzxCOU
  
- - sound (coming):
+ - sound effects (coming):
  
- - effects (coming):
+ - visual effects (coming):
  
- - game time, best time and restart game (coming):
+ - game time, best time and restart and quit game (coming):
  
 The game logic itself is my personal idea, and the art is forom my 5 year old kid.
 All the art was hand drawn, scanned, cut in photo editor and imported.
