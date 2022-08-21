@@ -29,6 +29,7 @@ public class AppleCountController : MonoBehaviour {
         if (appleCount < maxApples) {
             appleCount++;
             updateImages();
+            GetComponent<AudioSource>().Play();
 
             if (OnAppleCountChanged != null) {
                 OnAppleCountChanged(appleCount);

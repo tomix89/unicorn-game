@@ -9,8 +9,18 @@ public class AppleControl : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.name == "Player") {
             // apple have been captured 
-            this.gameObject.SetActive(false);
-            m_appleCountController.gainApple();
+     
+            m_appleCountController.gainApple(); // this triggers the sound
+            StartCoroutine(Deactivate(0.18f));
         }
     }
+
+    // make the apple disappear a bit later to have a better audio / video sync
+    IEnumerator Deactivate(float time) {
+        yield return new WaitForSeconds(time);
+        // Code to execute after the delay
+
+        this.gameObject.SetActive(false);
+    }
+
 }

@@ -16,7 +16,9 @@ In mayority of cases the base idea of scripts were taken from tutorals (with som
  https://answers.unity.com/questions/1201036/2d-camera-follow-1.html
  
  - rigged player animations (from png):
- https://www.youtube.com/watch?v=J1JcSp3lYiY
+ https://www.youtube.com/watch?v=J1JcSp3lYiY <br>
+   and some advise on animation from:
+ https://www.youtube.com/watch?v=nBkiSJ5z-hE
  
  - lives (apples) counter:
  https://www.youtube.com/watch?v=iX0BEiJTjrE&t=455s <br>
@@ -27,12 +29,15 @@ In mayority of cases the base idea of scripts were taken from tutorals (with som
  https://www.youtube.com/watch?v=zit45k6CUMk
  https://www.youtube.com/watch?v=wBol2xzxCOU
  
- - sound effects (coming):
+ - sound effects:
+ https://www.youtube.com/watch?v=6OT43pvUyfY <br>
+ https://www.youtube.com/watch?v=jwalC83tfKs
  
  - visual effects:
   own experiments with ParticleSystem
  
  - game time, best time and restart and quit game (coming):
+ https://answers.unity.com/questions/1253831/how-to-restart-the-game-2.html
  
 The game logic itself is my personal idea, and the art is forom my 5 year old kid.
 All the art was hand drawn, scanned, cut in photo editor and imported.
