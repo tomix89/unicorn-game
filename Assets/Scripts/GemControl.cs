@@ -20,7 +20,8 @@ public class GemControl : MonoBehaviour
 
     // ugly polling 
     private void Update() {
-        print("ps: " + _particleSystem.isStopped);
+        // when all th particles dye off, disable the whole gameobject
+        // which also stops the updates
         if (_particleSystem.isStopped) {
             this.gameObject.SetActive(false);
         }

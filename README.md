@@ -19,6 +19,8 @@ In mayority of cases the base idea of scripts were taken from tutorals (with som
  https://www.youtube.com/watch?v=J1JcSp3lYiY
  
  - lives (apples) counter:
+ https://www.youtube.com/watch?v=iX0BEiJTjrE&t=455s <br>
+ and
  https://www.youtube.com/watch?v=C_NsmQD6LK8
  
  - parallax background:
