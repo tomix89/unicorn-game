@@ -109,6 +109,7 @@ public class PlayerMovement : MonoBehaviour {
 
             case AnimationType.JUMP:
                 animText = "player_jump";
+                GetComponent<AudioSource>().Play();
                 break;
 
             case AnimationType.JUMP_WALK:
