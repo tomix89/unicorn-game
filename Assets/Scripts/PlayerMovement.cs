@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-    public CharacterController2D controller;
-
     enum AnimationType {
         IDLE,
         WALKING,
@@ -13,8 +11,10 @@ public class PlayerMovement : MonoBehaviour {
         JUMP_WALK,
     }
 
-    Animator animator;
-    AnimationType animatroCurrentState = AnimationType.IDLE; // this needsa to be the default in the Animator itself
+    private Animator animator;
+    private AnimationType animatroCurrentState = AnimationType.IDLE; // this needsa to be the default in the Animator itself
+    private AudioManager audioManager;
+    private CharacterController2D controller;
 
     float walkSpeed = 40;
     float hMoveAmount = 0;
@@ -24,7 +24,8 @@ public class PlayerMovement : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         animator = GetComponent<Animator>();
-    //    print(animator);
+        audioManager = GetComponent<AudioManager>();
+        controller = GetComponent<CharacterController2D>();
 
         AppleCountController.OnAppleCountChanged += OnAppleCountChanged;
 
@@ -101,19 +102,22 @@ public class PlayerMovement : MonoBehaviour {
         switch (anim) {
             case AnimationType.IDLE:
                 animText = "player_idle";
+                audioManager.Stop(); // no sound for this
                 break;
 
             case AnimationType.WALKING:
                 animText = "player_walk";
+                audioManager.Play("walking", true);
                 break;
 
             case AnimationType.JUMP:
                 animText = "player_jump";
-                GetComponent<AudioSource>().Play();
+                audioManager.Play("jump");
                 break;
 
             case AnimationType.JUMP_WALK:
                 animText = "player_jump_walk";
+                audioManager.Stop(); // no sound for this
                 break;
         }
 
