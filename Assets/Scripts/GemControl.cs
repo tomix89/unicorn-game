@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GemControl : MonoBehaviour
 {
@@ -24,6 +23,8 @@ public class GemControl : MonoBehaviour
         // which also stops the updates
         if (_particleSystem.isStopped) {
             this.gameObject.SetActive(false);
+            GameInfoHolder.setLevelResult(SceneManager.GetActiveScene().name, true);
+            SceneManager.LoadScene("LevelEnded_Scene");
         }
     }
 }
