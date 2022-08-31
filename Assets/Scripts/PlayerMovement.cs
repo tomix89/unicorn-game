@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -15,6 +14,7 @@ public class PlayerMovement : MonoBehaviour {
     private AnimationType animatroCurrentState = AnimationType.IDLE; // this needsa to be the default in the Animator itself
     private AudioManager audioManager;
     private CharacterController2D controller;
+    private Rigidbody2D _rigidbody2D;
 
     float walkSpeed = 40;
     float hMoveAmount = 0;
@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour {
         animator = GetComponent<Animator>();
         audioManager = GetComponent<AudioManager>();
         controller = GetComponent<CharacterController2D>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
 
         AppleCountController.OnAppleCountChanged += OnAppleCountChanged;
 
@@ -35,7 +36,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void OnAppleCountChanged(int count) {
 
-    //    print(count);
+        //    print(count);
 
         switch (count) {
             case 0:
@@ -60,9 +61,16 @@ public class PlayerMovement : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
         hMoveAmount = Input.GetAxisRaw("Horizontal") * walkSpeed;
         if (Input.GetButtonDown("Jump")) {
             jumpRequest = true;
+        }
+
+        // if we are below ground, we fell off the cliff
+        if (transform.position.y < -16.5) {
+            GameInfoHolder.setLevelResult(SceneManager.GetActiveScene().name, false);
+            SceneManager.LoadScene("LevelEnded_Scene");
         }
     }
 
@@ -86,6 +94,28 @@ public class PlayerMovement : MonoBehaviour {
         jumpRequest = false;
     }
 
+    private void OnCollisionEnter2D(Collision2D collision) {
+        // layer 8 is 'Enemy'
+        if (collision.gameObject.layer == 8) {
+
+            controller.AirControl = false;
+            Invoke("reActivateAirControl", 0.75f);
+
+
+
+
+            int collisionDir = (collision.contacts[0].normal.x > 0) ? +1 : -1;
+            //   _rigidbody2D.AddForce(new Vector2(1.1f * collisionDir * 0.707f, 0.707f) * 7.2f, ForceMode2D.Impulse);
+
+            _rigidbody2D.velocity = new Vector2(1.1f * collisionDir * 0.707f, 0.707f) * 15.2f;
+
+        }
+
+    }
+
+    private void reActivateAirControl() {
+        controller.AirControl = true;
+    }
 
 
     private void changeAnimation(AnimationType anim) {
@@ -94,8 +124,6 @@ public class PlayerMovement : MonoBehaviour {
             return;
         }
         animatroCurrentState = anim;
-
-      //  print(anim);
 
         string animText = "";
 
