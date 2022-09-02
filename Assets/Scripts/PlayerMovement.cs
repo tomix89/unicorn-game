@@ -30,13 +30,15 @@ public class PlayerMovement : MonoBehaviour {
 
         AppleCountController.OnAppleCountChanged += OnAppleCountChanged;
 
-        // just to set the default
-        OnAppleCountChanged(0);
+        // just to set the default - if total new game set min, if 
+        GameInfoHolder.initLevel(SceneManager.GetActiveScene().name);
+
+        OnAppleCountChanged(GameInfoHolder.lastLevelId == 2 ? 5 : 0);
     }
 
     void OnAppleCountChanged(int count) {
 
-        //    print(count);
+          //  print(count);
 
         switch (count) {
             case 0:
@@ -54,6 +56,12 @@ public class PlayerMovement : MonoBehaviour {
             case 3:
                 controller.setJumpForce(650);
                 break;
+
+                // for level 2
+            case 5:
+                controller.setJumpForce(850);
+                break;
+
 
         }
 
