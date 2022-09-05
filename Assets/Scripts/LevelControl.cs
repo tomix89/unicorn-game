@@ -18,9 +18,11 @@ public class LevelControl : MonoBehaviour {
         if (GameInfoHolder.wasLastLevelSucess) {
             smilie_holder.sprite = smilie_happy;
             text_holder.text = "Well Done!";
+            text_holder.color = Color.green;
         } else {
             smilie_holder.sprite = smilie_sad;
             text_holder.text = "Game Over";
+            text_holder.color = Color.red;
         }
     }
 
