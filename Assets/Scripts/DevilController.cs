@@ -1,11 +1,17 @@
 using UnityEngine;
 
-public class DevilController : MonoBehaviour
-{
+public class DevilController : MonoBehaviour {
+
+    public GameObject[] fireSystem;
 
     public GameObject L_border;
+    public GameObject M_border;
     public GameObject R_border;
     public GameObject player;
+
+    public GameObject rainbow;
+
+    public GameObject fire_water_sound; // i know this is shitty and i shall use audio manager as on player...
 
     float walkSpeed = 22;
     float direction = 1; // +-1
@@ -15,11 +21,42 @@ public class DevilController : MonoBehaviour
 
     float lastCollisionTime = 0;
 
+    private float scalerReduction = 0.0981f;
+    private float sizeScaler = 1.8f;
+    private bool isBig = true;
+
+    private bool fadeRainbow = false;
+
+
+    Vector3 devilOrigSize;
+    Vector3[] fireSystemOrigSize;
+
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         controller = GetComponent<CharacterController2D>();
+
+        devilOrigSize = transform.localScale;
+        fireSystemOrigSize = new Vector3[fireSystem.Length];
+
+        for (int i = 0; i < fireSystem.Length; i++) {
+            fireSystemOrigSize[i] = fireSystem[i].transform.localScale;
+        }
+
+        isBig = true;
+        scaleTo(sizeScaler, false);
     }
+
+
+    private void scaleTo(float scaleFactor, bool fireOnly) {
+        if (fireOnly == false) {
+            transform.localScale = devilOrigSize * scaleFactor;
+        }
+
+        for (int i = 0; i < fireSystem.Length; i++) {
+            fireSystem[i].transform.localScale = fireSystemOrigSize[i] * scaleFactor;
+        }
+    }
+
 
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -32,9 +69,10 @@ public class DevilController : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
+        GameObject farBorder = isBig ? M_border : L_border;
 
         isPlayerInRange = player.transform.position.x <= R_border.transform.position.x
-            && player.transform.position.x >= L_border.transform.position.x;
+            && player.transform.position.x >= farBorder.transform.position.x;
 
         if (!isPlayerInRange) {
             // needs to test also direction, because of movement smoothing
@@ -43,7 +81,7 @@ public class DevilController : MonoBehaviour
                                 //    print("changing dir -1");
             }
 
-            if ((transform.position.x <= L_border.transform.position.x) && (direction < 0)) {
+            if ((transform.position.x <= farBorder.transform.position.x) && (direction < 0)) {
                 direction = 1; // change direction upon reaching the border
                                //   print("changing dir +1");
             }
@@ -65,7 +103,68 @@ public class DevilController : MonoBehaviour
 
 
     private void FixedUpdate() {
+        // auto movement 
         controller.Move(hMoveAmount * Time.fixedDeltaTime, false);
+
+
+        // rainbow fadeout
+        if (fadeRainbow) {
+            SpriteRenderer sr = rainbow.gameObject.GetComponent<SpriteRenderer>();
+            Color clr = sr.color;
+
+            if (sr.color.a > 0) {
+
+                print("a: " + clr.a);
+
+                clr.a -= Time.deltaTime * 0.25f;
+
+                print("aaa: " + clr.a);
+
+                if (clr.a < 0) {
+                    Destroy(rainbow);
+                    fadeRainbow = false;
+                } else {
+                    sr.color = clr;
+                }
+            }
+       
+        }
+
     }
+
+
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        print("hit by: " + collision.gameObject.name);
+
+        if (collision.gameObject.name.StartsWith("rainbowProjectile") && isBig) {
+            sizeScaler -= scalerReduction;
+
+            AudioClip ac = fire_water_sound.GetComponent<AudioSource>().clip;
+            fire_water_sound.GetComponent<AudioSource>().PlayOneShot(ac, 1);
+
+            print("sizeScaler: " + sizeScaler);
+
+            if (sizeScaler < 0.2) {
+
+                // stop the fire
+                for (int i = 0; i < fireSystem.Length; i++) {
+                    fireSystem[i].GetComponent<ParticleSystem>().Stop();
+                }
+
+                isBig = false;
+                GetComponent<AudioSource>().Stop();
+
+                rainbow.gameObject.GetComponent<BoxCollider2D>().enabled = false; // stop emiting projectiles
+                fadeRainbow = true;
+
+                sizeScaler = 1;
+                scaleTo(sizeScaler, false);
+            }
+
+            scaleTo(sizeScaler, true);
+        }
+    }
+
 
 }

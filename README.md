@@ -39,6 +39,9 @@ In mayority of cases the base idea of scripts were taken from tutorals (with som
  - game time, best time and restart and quit game (coming):
  https://answers.unity.com/questions/1253831/how-to-restart-the-game-2.html
  
+ - bullet follows enemy (rainbow to devil):
+ https://www.youtube.com/watch?v=0v_H3oOR0aU
+ 
 The game logic itself is my personal idea, and the art is forom my 5 year old kid.
 All the art was hand drawn, scanned, cut in photo editor and imported.
 

@@ -20,13 +20,20 @@ public class PlayerMovement : MonoBehaviour {
     float hMoveAmount = 0;
     bool jumpRequest = false;
 
+    public GameObject trampoline = null;
+    private BoxCollider2D trampolineCollider = null;
+    private bool reActivateAirControlOnGround = false;
 
-    // Start is called before the first frame update
+     // Start is called before the first frame update
     void Start() {
         animator = GetComponent<Animator>();
         audioManager = GetComponent<AudioManager>();
         controller = GetComponent<CharacterController2D>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
+
+        if (trampoline) {
+            trampolineCollider = trampoline.GetComponent<BoxCollider2D>();
+        }
 
         AppleCountController.OnAppleCountChanged += OnAppleCountChanged;
     }
@@ -58,10 +65,33 @@ public class PlayerMovement : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
+
         hMoveAmount = Input.GetAxisRaw("Horizontal") * walkSpeed;
-        if (Input.GetButtonDown("Jump")) {
+        if (Input.GetButtonDown("Jump") && controller.isGrounded()) {
             jumpRequest = true;
         }
+
+
+        if (trampolineCollider) {
+
+            // if player stands on the trampoline collider
+            bool isPlayerOnTramp = (trampolineCollider.bounds.min.x < transform.position.x)
+                && (trampolineCollider.bounds.max.x > transform.position.x);
+
+            if (isPlayerOnTramp) {
+                if (jumpRequest) {
+                    jumpRequest = false;
+                    reActivateAirControlOnGround = true;
+                    controller.AirControl = false;
+                    _rigidbody2D.velocity = Vector2.up * 21;
+                }
+            } else if (reActivateAirControlOnGround && controller.isGrounded()) {
+                reActivateAirControlOnGround = false;
+                controller.AirControl = true;
+            }
+        }
+
+
 
         // if we are below ground, we fell off the cliff
         if (transform.position.y < -16.5) {
@@ -91,13 +121,13 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        // layer 8 is 'Enemy'
-        if (collision.gameObject.layer == 8) {
+
+            // layer 8 is 'Enemy'
+            if (collision.gameObject.layer == 8) {
 
             controller.AirControl = false;
             Invoke("reActivateAirControl", 0.75f);
-
-
+            audioManager.Play("ouch");
 
 
             int collisionDir = (collision.contacts[0].normal.x > 0) ? +1 : -1;
@@ -112,7 +142,6 @@ public class PlayerMovement : MonoBehaviour {
     private void reActivateAirControl() {
         controller.AirControl = true;
     }
-
 
     private void changeAnimation(AnimationType anim) {
 

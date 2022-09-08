@@ -20,7 +20,7 @@ public class AudioManager : MonoBehaviour {
         } 
     }
 
-    public void Play(string name, bool loop = false) {
+        public void Play(string name, bool loop = false) {
 
         AudioClip clip = audioClips.Where(item => item.name == name).FirstOrDefault();
         if (clip) {
