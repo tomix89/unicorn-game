@@ -16,6 +16,7 @@ public class DevilController : MonoBehaviour {
     float walkSpeed = 22;
     float direction = 1; // +-1
     float hMoveAmount = 0;
+    public bool stopMovement = false;
     bool isPlayerInRange = false;
     private CharacterController2D controller;
 
@@ -109,8 +110,10 @@ public class DevilController : MonoBehaviour {
 
     private void FixedUpdate() {
         // auto movement 
-        controller.Move(hMoveAmount * Time.fixedDeltaTime, false);
 
+        if (stopMovement == false) {
+            controller.Move(hMoveAmount * Time.fixedDeltaTime, false);
+        }
 
         // rainbow fadeout
         if (fadeRainCloud) {
@@ -119,11 +122,11 @@ public class DevilController : MonoBehaviour {
 
             if (sr.color.a > 0) {
 
-              //  print("a: " + clr.a);
+                //  print("a: " + clr.a);
 
                 clr.a -= Time.deltaTime * 0.25f;
 
-              //  print("aaa: " + clr.a);
+                //  print("aaa: " + clr.a);
 
                 if (clr.a < 0) {
                     Destroy(rainCloud);
@@ -132,7 +135,7 @@ public class DevilController : MonoBehaviour {
                     sr.color = clr;
                 }
             }
-       
+
         }
 
     }
@@ -141,7 +144,11 @@ public class DevilController : MonoBehaviour {
     private float soundRate = 0.75f;
 
     private void OnTriggerEnter2D(Collider2D collision) {
-       // print("hit by: " + collision.gameObject.name);
+        // print("hit by: " + collision.gameObject.name);
+
+        if (collision.gameObject.name.StartsWith("rainbow_circle")) {
+            stopMovement = true;
+        }
 
         if (collision.gameObject.name.StartsWith("rainDrop") && isBig) {
             sizeScaler -= scalerReduction;
@@ -152,7 +159,7 @@ public class DevilController : MonoBehaviour {
                 fire_water_sound.GetComponent<AudioSource>().PlayOneShot(ac, 1);
             }
 
-           // print("sizeScaler: " + sizeScaler);
+            // print("sizeScaler: " + sizeScaler);
 
             if (sizeScaler < 0.2) {
 

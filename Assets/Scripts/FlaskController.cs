@@ -26,7 +26,7 @@ public class FlaskController : MonoBehaviour {
 
             // re- enable if we are far enough
             float dist = Vector3.Distance(player.transform.position, transform.position);
-            print(dist);
+        //    print(dist);
             if (dist > 5) {
 
                 if (_spriteRenderer.color == Color.green) {

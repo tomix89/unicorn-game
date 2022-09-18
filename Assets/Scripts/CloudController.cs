@@ -50,12 +50,6 @@ public class CloudController : MonoBehaviour {
                 Color clr3;
                 ColorUtility.TryParseHtmlString("#4C5C8E", out clr3);
                 _sr.color = clr3;
-                break;
-
-            case 4:
-                Color clr4;
-                ColorUtility.TryParseHtmlString("#3D455E", out clr4);
-                _sr.color = clr4;
                 isRaining = true;
                 break;
         }
@@ -77,7 +71,7 @@ public class CloudController : MonoBehaviour {
             }
 
 
-            print("alpha: " + _sr.color.a + " rainRate: " + rainRateScaled);
+        //    print("alpha: " + _sr.color.a + " rainRate: " + rainRateScaled);
 
 
             // roll the random number if it shall generate a raindrop
