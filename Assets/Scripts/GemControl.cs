@@ -30,8 +30,8 @@ public class GemControl : MonoBehaviour
 
             // stop player movement - in the air
             player.GetComponent<Rigidbody2D>().simulated = false;
-            // devil will stop itself from movement
-            devilController.stopMovement = true;
+            // devil will try to escape
+            devilController.runAway = true;
             // move the cam to the devil
             camController.cameraTarget = devil.transform;
             animateRainbow = true;

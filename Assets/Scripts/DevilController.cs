@@ -16,7 +16,7 @@ public class DevilController : MonoBehaviour {
     float walkSpeed = 22;
     float direction = 1; // +-1
     float hMoveAmount = 0;
-    public bool stopMovement = false;
+    public bool runAway = false;
     bool isPlayerInRange = false;
     private CharacterController2D controller;
 
@@ -97,6 +97,10 @@ public class DevilController : MonoBehaviour {
 
         // clip to the maximums is not needed, because the isPlayerInRange already creates the borders
 
+        if (runAway) {
+            direction = 1;
+        }
+
         // if player is in range move faster
         hMoveAmount = direction * walkSpeed * (isPlayerInRange ? 2 : 1);
 
@@ -110,10 +114,8 @@ public class DevilController : MonoBehaviour {
 
     private void FixedUpdate() {
         // auto movement 
+        controller.Move(hMoveAmount * Time.fixedDeltaTime, false);
 
-        if (stopMovement == false) {
-            controller.Move(hMoveAmount * Time.fixedDeltaTime, false);
-        }
 
         // rainbow fadeout
         if (fadeRainCloud) {
@@ -145,10 +147,6 @@ public class DevilController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         // print("hit by: " + collision.gameObject.name);
-
-        if (collision.gameObject.name.StartsWith("rainbow_circle")) {
-            stopMovement = true;
-        }
 
         if (collision.gameObject.name.StartsWith("rainDrop") && isBig) {
             sizeScaler -= scalerReduction;
