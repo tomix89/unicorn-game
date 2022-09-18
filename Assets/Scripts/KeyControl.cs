@@ -11,7 +11,8 @@ public class KeyControl : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.name == "Player") {
+        // layer 6 is 'Player'
+        if (collision.gameObject.layer == 6) {
             GetComponent<Collider2D>().enabled = false;
             GetComponent<SpriteRenderer>().enabled = false;
             _particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);

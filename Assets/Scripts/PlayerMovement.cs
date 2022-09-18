@@ -24,7 +24,10 @@ public class PlayerMovement : MonoBehaviour {
     private BoxCollider2D trampolineCollider = null;
     private bool reActivateAirControlOnGround = false;
 
-     // Start is called before the first frame update
+    private Vector3 origSize;
+ 
+
+    // Start is called before the first frame update
     void Start() {
         animator = GetComponent<Animator>();
         audioManager = GetComponent<AudioManager>();
@@ -36,11 +39,13 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         AppleCountController.OnAppleCountChanged += OnAppleCountChanged;
+
+        origSize = transform.localScale;
     }
 
     void OnAppleCountChanged(int count) {
 
-          //  print(count);
+        //  print(count);
 
         switch (count) {
             case 0:
@@ -122,8 +127,8 @@ public class PlayerMovement : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision) {
 
-            // layer 8 is 'Enemy'
-            if (collision.gameObject.layer == 8) {
+        // layer 8 is 'Enemy'
+        if (collision.gameObject.layer == 8) {
 
             controller.AirControl = false;
             Invoke("reActivateAirControl", 0.75f);
@@ -134,6 +139,25 @@ public class PlayerMovement : MonoBehaviour {
             //   _rigidbody2D.AddForce(new Vector2(1.1f * collisionDir * 0.707f, 0.707f) * 7.2f, ForceMode2D.Impulse);
 
             _rigidbody2D.velocity = new Vector2(1.1f * collisionDir * 0.707f, 0.707f) * 15.2f;
+
+        }
+
+    }
+
+    void OnTriggerEnter2D(Collider2D collision) {
+
+        // layer 11 is 'Consumable'
+        if (collision.gameObject.layer == 11) {
+
+            if (collision.gameObject.name == "flask_potion") {
+                if (collision.gameObject.GetComponent<SpriteRenderer>().color == Color.green) {
+                    transform.localScale = origSize * 0.5f;
+                } else {
+                    transform.localScale = origSize;
+                }
+            }
+
+           
 
         }
 
