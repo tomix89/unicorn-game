@@ -9,7 +9,7 @@ public class DevilController : MonoBehaviour {
     public GameObject R_border;
     public GameObject player;
 
-    public GameObject rainbow;
+    public GameObject rainCloud;
 
     public GameObject fire_water_sound; // i know this is shitty and i shall use audio manager as on player...
 
@@ -21,11 +21,11 @@ public class DevilController : MonoBehaviour {
 
     float lastCollisionTime = 0;
 
-    private float scalerReduction = 0.0981f;
+    private float scalerReduction = 0.033f;
     private float sizeScaler = 1.8f;
     private bool isBig = true;
 
-    private bool fadeRainbow = false;
+    private bool fadeRainCloud = false;
 
 
     Vector3 devilOrigSize;
@@ -48,7 +48,12 @@ public class DevilController : MonoBehaviour {
 
 
     private void scaleTo(float scaleFactor, bool fireOnly) {
+
+        // if we change scale it is important to check the sign,
+        // other ways the sprite ends up walking backwards 
         if (fireOnly == false) {
+
+
             transform.localScale = devilOrigSize * scaleFactor;
         }
 
@@ -108,21 +113,21 @@ public class DevilController : MonoBehaviour {
 
 
         // rainbow fadeout
-        if (fadeRainbow) {
-            SpriteRenderer sr = rainbow.gameObject.GetComponent<SpriteRenderer>();
+        if (fadeRainCloud) {
+            SpriteRenderer sr = rainCloud.gameObject.GetComponent<SpriteRenderer>();
             Color clr = sr.color;
 
             if (sr.color.a > 0) {
 
-                print("a: " + clr.a);
+              //  print("a: " + clr.a);
 
                 clr.a -= Time.deltaTime * 0.25f;
 
-                print("aaa: " + clr.a);
+              //  print("aaa: " + clr.a);
 
                 if (clr.a < 0) {
-                    Destroy(rainbow);
-                    fadeRainbow = false;
+                    Destroy(rainCloud);
+                    fadeRainCloud = false;
                 } else {
                     sr.color = clr;
                 }
@@ -132,18 +137,22 @@ public class DevilController : MonoBehaviour {
 
     }
 
-
+    private float lastSound = 0;
+    private float soundRate = 0.75f;
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        print("hit by: " + collision.gameObject.name);
+       // print("hit by: " + collision.gameObject.name);
 
-        if (collision.gameObject.name.StartsWith("rainbowProjectile") && isBig) {
+        if (collision.gameObject.name.StartsWith("rainDrop") && isBig) {
             sizeScaler -= scalerReduction;
 
-            AudioClip ac = fire_water_sound.GetComponent<AudioSource>().clip;
-            fire_water_sound.GetComponent<AudioSource>().PlayOneShot(ac, 1);
+            if (Time.time > (soundRate + lastSound)) {
+                lastSound = Time.time;
+                AudioClip ac = fire_water_sound.GetComponent<AudioSource>().clip;
+                fire_water_sound.GetComponent<AudioSource>().PlayOneShot(ac, 1);
+            }
 
-            print("sizeScaler: " + sizeScaler);
+           // print("sizeScaler: " + sizeScaler);
 
             if (sizeScaler < 0.2) {
 
@@ -155,8 +164,8 @@ public class DevilController : MonoBehaviour {
                 isBig = false;
                 GetComponent<AudioSource>().Stop();
 
-                rainbow.gameObject.GetComponent<BoxCollider2D>().enabled = false; // stop emiting projectiles
-                fadeRainbow = true;
+                rainCloud.gameObject.GetComponent<BoxCollider2D>().enabled = false; // stop emiting projectiles
+                fadeRainCloud = true;
 
                 sizeScaler = 1;
                 scaleTo(sizeScaler, false);
