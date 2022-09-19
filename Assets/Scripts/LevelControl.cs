@@ -26,6 +26,19 @@ public class LevelControl : MonoBehaviour {
         }
     }
 
+    // keyboard shortcuts
+    void Update() {
+ 
+        // return is enter ...
+        if (Input.GetKeyDown(KeyCode.Return)) {
+            OnRestartClick();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            OnQuitClick();
+        }
+    }
+
 
     public void OnRestartClick() {
         // restarts the CURRENT level
