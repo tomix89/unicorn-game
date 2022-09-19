@@ -40,11 +40,12 @@ public class GemControl : MonoBehaviour
 
     // rainbow hit the devil
     public void OnChildTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.layer > 0) {
-            if (purgeDevil == false) {
 
-                //  print(collision.gameObject.name);
-                //  print(collision.name);
+       // print(collision.gameObject.name);
+       // print(collision.name);
+
+        if (collision.gameObject.name == "devil_slice") {
+            if (purgeDevil == false) {
 
                 Invoke("endLevel", 2.1f); // start the end
                 purgeDevil = true;
