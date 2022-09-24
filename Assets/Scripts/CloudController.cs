@@ -57,22 +57,17 @@ public class CloudController : MonoBehaviour {
     }
 
 
-    private void Update() {
-
+    private void FixedUpdate() {
 
         if (isRaining) {
-
             float rainRateScaled = rainRateOrig * Mathf.Pow(_sr.color.a, 2);
-
             // when we begin to fade the rainbow, stop the rain
 
             if (rainRateScaled < 0.5) {
                 isRaining = false;
             }
 
-
-        //    print("alpha: " + _sr.color.a + " rainRate: " + rainRateScaled);
-
+            //    print("alpha: " + _sr.color.a + " rainRate: " + rainRateScaled);
 
             // roll the random number if it shall generate a raindrop
             float rn = Random.Range(0.0f, 100.0f);
@@ -81,7 +76,6 @@ public class CloudController : MonoBehaviour {
                 Quaternion qt = Quaternion.Euler(0, 0, 0);
                 Instantiate(rainDrop, new Vector3(transform.position.x + rainWidth * Random.Range(-1.0f, 1.0f), transform.position.y + colliderSize.y - 1, 0), qt);
             }
-
         }
     }
 

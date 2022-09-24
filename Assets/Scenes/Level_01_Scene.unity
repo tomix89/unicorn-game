@@ -1061,7 +1061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rainDrop: {fileID: 4775672565372647272, guid: 4a74f7c0da63f6a4c886030c891546e4, type: 3}
-  rainRateOrig: 25.1
+  rainRateOrig: 60
   rainWidth: 12.6
   isRaining: 0
 --- !u!1 &519420028
@@ -23776,7 +23776,7 @@ MonoBehaviour:
   player: {fileID: 886507576}
   rainCloud: {fileID: 398576332}
   fire_water_sound: {fileID: 1798372239}
-  stopMovement: 0
+  runAway: 0
 --- !u!50 &1673424247
 Rigidbody2D:
   serializedVersion: 4
