@@ -2,6 +2,10 @@
 My first ever Unity game.
 I just wanted to test out some basic concepts, and how unity works.
 
+NOW ONLINE!
+https://play.unity.com/mg/other/webgl-builds-272815
+
+
 In mayority of cases the base idea of scripts were taken from tutorals (with some degree of customization of course):
 
  - basic movement (without crouch): 
